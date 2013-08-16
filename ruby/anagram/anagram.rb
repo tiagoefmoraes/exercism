@@ -5,8 +5,8 @@ class Anagram
     @word = AnagramWord.new(word)
   end
 
-  def match(list)
-    list.select do |possible_anagram|
+  def match(possible_anagrams)
+    possible_anagrams.select do |possible_anagram|
       word.anagram_of?(AnagramWord.new(possible_anagram))
     end
   end
@@ -17,23 +17,27 @@ class AnagramWord
   attr_reader :source
 
   def initialize(source)
-    @source = source
+    @source = source.upcase
   end
 
   def anagram_of?(other)
-    if duplicate?(other)
-      other_word = other.source.clone
-      if source.length == other_word.length
-        source.each_char {|c| other_word.sub!(/#{c}/i, '')}
-      end
-      other_word.empty?
-    end
+    self == other if different? other
   end
 
+  def ==(other)
+    self.identity == other.identity
+  end  
+  
+  protected
+
+  def identity
+    source.chars.sort
+  end
+  
   private
 
-  def duplicate?(other)
-    source.upcase != other.source.upcase
+  def different?(other)
+    source != other.source
   end
-
+  
 end
