@@ -21,7 +21,7 @@ class AnagramWord
   end
 
   def anagram_of?(other)
-    self == other if different? other
+    source != other.source and self == other
   end
 
   def ==(other)
@@ -33,11 +33,5 @@ class AnagramWord
   def identity
     source.chars.sort
   end
-  
-  private
 
-  def different?(other)
-    source != other.source
-  end
-  
 end
