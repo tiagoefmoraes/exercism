@@ -14,14 +14,14 @@ class Anagram
 end
 
 class AnagramWord
-  attr_reader :source
+  attr_reader :subject
 
-  def initialize(source)
-    @source = source.upcase
+  def initialize(subject)
+    @subject = subject.upcase
   end
 
   def anagram_of?(other)
-    source != other.source and self == other
+    subject != other.subject and self == other
   end
 
   def ==(other)
@@ -31,7 +31,7 @@ class AnagramWord
   protected
 
   def identity
-    source.chars.sort
+    subject.chars.sort
   end
 
 end
