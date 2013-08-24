@@ -1,5 +1,4 @@
 class Anagram
-  attr_reader :word
 
   def initialize(word)
     @word = AnagramWord.new(word)
@@ -11,11 +10,12 @@ class Anagram
     end
   end
 
+  private
+
+  attr_reader :word
 end
 
 class AnagramWord
-  attr_reader :subject
-
   def initialize(subject)
     @subject = subject.upcase
   end
@@ -29,6 +29,8 @@ class AnagramWord
   end  
   
   protected
+
+  attr_reader :subject
 
   def identity
     subject.chars.sort
