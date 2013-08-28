@@ -1,6 +1,6 @@
 class DNA
   def initialize(nucleotides)
-    @nucleotides = nucleotides.chars
+    @nucleotides = nucleotides
   end
 
   def count(nucleotide)
