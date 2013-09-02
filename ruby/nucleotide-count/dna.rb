@@ -9,7 +9,7 @@ class DNA
   end
 
   def nucleotide_counts
-    DNA_NUCLEOTIDES.each_with_object(Hash.new) do |nucleotide, result|
+    DNA_NUCLEOTIDES.each_with_object({}) do |nucleotide, result|
       result[nucleotide] = count(nucleotide)
     end
   end
