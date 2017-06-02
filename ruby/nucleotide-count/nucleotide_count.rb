@@ -1,14 +1,15 @@
 class NucleicAcid
   def initialize(nucleotides)
     @nucleotides = nucleotides
+    nucleotides.split('').uniq.each { |nucleotide| validate_nucleotide(nucleotide) }
   end
 
   def count(nucleotide)
-    raise ArgumentError.new(nucleotide) unless NUCLEOBASES.include? nucleotide
+    validate_nucleotide(nucleotide)
     nucleotides.count(nucleotide)
   end
 
-  def nucleotide_counts
+  def histogram
     specific_nucleobases.each_with_object({}) do |nucleotide, result|
       result[nucleotide] = count(nucleotide)
     end
@@ -25,6 +26,10 @@ class NucleicAcid
   NUCLEOBASES = %w(A T C G U)
 
   attr_reader :nucleotides
+  
+  def validate_nucleotide(nucleotide)
+    raise ArgumentError.new(nucleotide) unless NUCLEOBASES.include? nucleotide
+  end
 end
 
 class DNA < NucleicAcid
@@ -35,4 +40,10 @@ class DNA < NucleicAcid
     %w(A T C G)
   end
 
+end
+
+class Nucleotide
+  def self.from_dna(dna)
+    DNA.new(dna)
+  end
 end

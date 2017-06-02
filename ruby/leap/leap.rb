@@ -1,3 +1,7 @@
+module BookKeeping
+  VERSION = 3
+end
+
 def evenly_divisible(dividend, divisor)
   (dividend % divisor).zero?
 end

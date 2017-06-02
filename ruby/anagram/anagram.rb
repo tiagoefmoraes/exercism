@@ -1,3 +1,7 @@
+module BookKeeping
+  VERSION = 2
+end
+
 class Anagram
 
   def initialize(word)

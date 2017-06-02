@@ -1,3 +1,7 @@
+module BookKeeping
+  VERSION = 1
+end
+
 class Phrase
   def initialize(source)
     @source = source
@@ -12,6 +16,6 @@ class Phrase
   attr_reader :source
 
   def split_words
-    source.downcase.scan(/\w+/)
+    source.downcase.scan(/[\w']+/).map { |word| word.gsub(/\A'|'\Z/, '') }
   end
 end

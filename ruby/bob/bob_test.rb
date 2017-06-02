@@ -1,108 +1,134 @@
+#!/usr/bin/env ruby
 require 'minitest/autorun'
+require_relative 'bob'
 
-begin
-  require_relative 'bob'
-
-  class TeenagerTest < MiniTest::Unit::TestCase
-    attr_reader :teenager
-
-    def setup
-      @teenager = ::Bob.new
-    end
-
-    def test_stating_something
-      assert_equal 'Whatever.', teenager.hey('Tom-ay-to, tom-aaaah-to.')
-    end
-
-    def test_shouting
-      assert_equal 'Woah, chill out!', teenager.hey('WATCH OUT!')
-    end
-
-    def test_asking_a_question
-      assert_equal 'Sure.', teenager.hey('Does this cryogenic chamber make me look fat?')
-    end
-
-    def test_asking_a_numeric_question
-      assert_equal 'Sure.', teenager.hey('You are, what, like 15?')
-    end
-
-    def test_talking_forcefully
-      assert_equal 'Whatever.', teenager.hey("Let's go make out behind the gym!")
-    end
-
-    def test_using_acronyms_in_regular_speech
-      assert_equal 'Whatever.', teenager.hey("It's OK if you don't want to go to the DMV.")
-    end
-
-    def test_forceful_questions
-      assert_equal 'Woah, chill out!', teenager.hey('WHAT THE HELL WERE YOU THINKING?')
-    end
-
-    def test_shouting_numbers
-      assert_equal 'Woah, chill out!', teenager.hey('1, 2, 3 GO!')
-    end
-
-    def test_shouting_with_special_characters
-      assert_equal 'Woah, chill out!', teenager.hey('ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!')
-    end
-
-    def test_shouting_with_no_exclamation_mark
-      assert_equal 'Woah, chill out!', teenager.hey('I HATE YOU')
-    end
-
-    def test_statement_containing_question_mark
-      assert_equal 'Whatever.', teenager.hey('Ending with ? means a question.')
-    end
-
-    def test_prattling_on
-      assert_equal 'Sure.', teenager.hey("Wait! Hang on. Are you going to be OK?")
-    end
-
-    def test_silence
-      assert_equal 'Fine. Be that way!', teenager.hey('')
-    end
-
-    def test_prolonged_silence
-      assert_equal 'Fine. Be that way!', teenager.hey('    ')
-    end
+class BobTest < Minitest::Test
+  def bob
+    Bob
   end
 
-rescue LoadError => e
-
-  def explain(something)
-    puts "Hit enter to continue..."
-    gets
-    puts "\033c"
-    puts something
-    puts
+  def feedback(text)
+    "Bob hears #{text.inspect}, and.."
   end
 
-  zomg = <<-ERROR
-######## ########  ########   #######  ########  
-##       ##     ## ##     ## ##     ## ##     ## 
-##       ##     ## ##     ## ##     ## ##     ## 
-######   ########  ########  ##     ## ########  
-##       ##   ##   ##   ##   ##     ## ##   ##   
-##       ##    ##  ##    ##  ##     ## ##    ##  
-######## ##     ## ##     ##  #######  ##     ## 
+  def test_stating_something
+    remark = 'Tom-ay-to, tom-aaaah-to.'
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
 
-  ERROR
-  puts
-  puts zomg
+  def test_shouting
+    # skip
+    remark = 'WATCH OUT!'
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
 
-  explain "I'm going to\n* show you an error message,\n* then explain what you're seeing\n* then tell you how to fix it."
-  explain "Seriously, don't freak out. It's not that bad."
-  explain "OK, this is it:\n\n#{e.backtrace.first} #{e.message}"
-  explain "First it tells you the name of the file where the error is occurring.\n\n\n\tbob_test.rb"
-  explain "Then it tells you which line that error is on.\n\n\n\tbob_test.rb:4"
+  def test_shouting_gibberish
+    # skip
+    remark = ('A'..'Z').to_a.sample(10).join
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
 
-  explain "After that, it tells you the name of the method where the error is occurring.\n\n\n\tin `require_relative'."
-  explain "Next, it tells you exactly what the error is.\n\n\n\tcannot load such file"
-  explain "Finally, it tells you which file is missing.\n\n\n\t/path/to/your/code/ruby/bob/bob"
-  explain "So the error is that on line 4. What's on line 4?\n\n\n\trequire_relative 'bob'"
-  explain "Essentially, when we try to require the file, it says it's not there. You can fix the problem by creating an empty file named bob.rb inside of the ruby/bob directory."
-  explain "Take another look at the error message.\nDoes it make more sense?\n\n\n#{e.backtrace.first} #{e.message}"
-  explain "Now your mission is to get all the tests to pass. All but the first test are pending. Once the first test passes, delete the `skip` from the next test, and so on. Check out the README for more details."
-  puts
-  exit!
+  def test_asking_a_question
+    # skip
+    remark = 'Does this cryogenic chamber make me look fat?'
+    assert_equal 'Sure.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_asking_a_numeric_question
+    # skip
+    remark = 'You are, what, like 15?'
+    assert_equal 'Sure.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_asking_gibberish
+    # skip
+    remark = ('a'..'z').to_a.sample(10).join << '?'
+    assert_equal 'Sure.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_talking_forcefully
+    # skip
+    remark = "Let's go make out behind the gym!"
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_using_acronyms_in_regular_speech
+    # skip
+    remark = "It's OK if you don't want to go to the DMV."
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_forceful_questions
+    # skip
+    remark = 'WHAT THE HELL WERE YOU THINKING?'
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_shouting_numbers
+    # skip
+    remark = '1, 2, 3 GO!'
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_only_numbers
+    # skip
+    remark = '1, 2, 3'
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_question_with_only_numbers
+    # skip
+    remark = '4?'
+    assert_equal 'Sure.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_shouting_with_special_characters
+    # skip
+    remark = 'ZOMG THE %^*@#$(*^ ZOMBIES ARE COMING!!11!!1!'
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_shouting_with_no_exclamation_mark
+    # skip
+    remark = 'I HATE YOU'
+    assert_equal 'Whoa, chill out!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_statement_containing_question_mark
+    # skip
+    remark = 'Ending with ? means a question.'
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_prattling_on
+    # skip
+    remark = 'Wait! Hang on. Are you going to be OK?'
+    assert_equal 'Sure.', bob.hey(remark), feedback(remark)
+  end
+
+  def test_silence
+    # skip
+    remark = ''
+    assert_equal 'Fine. Be that way!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_prolonged_silence
+    # skip
+    remark = ' ' * rand(1..10)
+    assert_equal 'Fine. Be that way!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_alternate_silences
+    # skip
+    remark = "\t" * rand(1..10)
+    assert_equal 'Fine. Be that way!', bob.hey(remark), feedback(remark)
+  end
+
+  def test_on_multiple_line_questions
+    # skip
+    remark = %(
+Does this cryogenic chamber make me look fat?
+no)
+    assert_equal 'Whatever.', bob.hey(remark), feedback(remark)
+  end
 end
